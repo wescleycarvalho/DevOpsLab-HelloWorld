@@ -1,6 +1,9 @@
 name: CI -Lint / Tests / Deploy 
+
 on: [push] 
+
 jobs: 
+
   lint: 
     runs-on: ubuntu-20.04 
     
@@ -16,9 +19,10 @@ jobs:
           python -m pip install --upgrade pip 
           pip install flake8
  
-       - name: Lint with flake8 
-         run: | 
+      - name: Lint with flake8 
+        run: | 
            #stopthebuildiftherearePythonsyntaxerrorsorundefinednamesflake8.--count--select=E9,F63,F7,F82--show-source--statistics#exit-zerotreatsallerrorsaswarnings.TheGitHubeditoris127charswideflake8.--count--exit-zero--max-complexity=10--max-line-length=127--statistics
+  
   tests: 
     needs: lint 
     runs-on: ubuntu-20.04
@@ -41,20 +45,21 @@ jobs:
       - name: Integrations Test 
         run: | 
           python test.py 
- deploy: 
-   needs: tests 
-   runs-on: ubuntu-20.04
+  deploy: 
+    needs: tests 
+    runs-on: ubuntu-20.04
  
-   steps: 
-     - uses: actions/checkout@v2
+    steps: 
+      - uses: actions/checkout@v2
      
-    - name: Set up Python3.9 
-      uses: actions/setup-python@v2
-      with: 
-        python-version:3.9
-    - name: deploy into heroku
-      uses: akhileshns/heroku-deploy@v3.12.12
-      with: 
-        heroku_api_key:  ${{secrets.HEROKU_API_KEY}}
-        heroku_app_name: ${{secrets.HEROKU_APP_NAME}}
-        heroku_email:    ${{secrets.HEROKU_USER_EMAIL}}
+      - name: Set up Python3.9 
+        uses: actions/setup-python@v2
+        with: 
+          python-version:3.9
+      
+      - name: deploy into heroku
+        uses: akhileshns/heroku-deploy@v3.12.12
+        with: 
+          heroku_api_key:  ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: ${{secrets.HEROKU_APP_NAME}}
+          heroku_email:    ${{secrets.HEROKU_USER_EMAIL}}
