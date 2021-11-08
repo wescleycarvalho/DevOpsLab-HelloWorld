@@ -1,11 +1,10 @@
 name: CI -Lint / Tests / Deploy 
-
 on: [push] 
 jobs: 
  lint: 
-   runs-on: ubuntu-20.04 
-   steps:
-     - uses: actions/checkout@v2
+ runs-on: ubuntu-20.04 
+ steps:
+ - uses: actions/checkout@v2
  - name: SetupPython3.9
    uses: actions/setup-python@v2
    with: python-version:3.9
